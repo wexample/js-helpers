@@ -1,6 +1,6 @@
 # js_helpers
 
-Version: 0.0.2
+Version: 0.0.3
 
 ## Table of Contents
 
