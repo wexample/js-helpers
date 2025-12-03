@@ -1,6 +1,6 @@
 # js_helpers
 
-Version: 0.0.2
+Version: 0.0.3
 
 ## Table of Contents
 
@@ -124,10 +124,6 @@ Visit the [Wexample Suite documentation](https://docs.wexample.com) for the comp
 This package is part of the Wexample suite and is compatible with other suite packages.
 
 Refer to each package's documentation for specific version compatibility requirements.
-
-## Dependencies
-
-
 
 # About us
 
