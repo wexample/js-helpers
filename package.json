@@ -1,7 +1,11 @@
 {
-  "version": "0.0.3",
-  "type": "module",
   "name": "@wexample/js-helpers",
+  "version": "0.0.3",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./helper/string": "./src/helper/string.js"
+  },
   "publishConfig": {
     "access": "public"
   }
