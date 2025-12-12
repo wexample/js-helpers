@@ -1,12 +1,52 @@
 {
   "name": "@wexample/js-helpers",
   "version": "0.0.3",
-  "main": "src/index.js",
+  "description": "Modern, type-safe helper utilities for Wexample projects.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./helper/string": "./src/helper/string.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    },
+    "./helper/string": {
+      "types": "./dist/helper/string.d.ts",
+      "import": "./dist/helper/string.mjs",
+      "require": "./dist/helper/string.cjs",
+      "default": "./dist/helper/string.mjs"
+    },
+    "./package.json": "./package.json"
   },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "npm run typecheck",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "wexample",
+    "helpers",
+    "utility",
+    "kebab-case"
+  ],
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   }
 }
