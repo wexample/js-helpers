@@ -1,6 +1,6 @@
 {
   "name": "@wexample/js-helpers",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Modern, type-safe helper utilities for Wexample projects.",
   "license": "MIT",
   "type": "module",
@@ -19,6 +19,18 @@
       "import": "./dist/helper/string.mjs",
       "require": "./dist/helper/string.cjs",
       "default": "./dist/helper/string.mjs"
+    },
+    "./helper/log": {
+      "types": "./dist/helper/log.d.ts",
+      "import": "./dist/helper/log.mjs",
+      "require": "./dist/helper/log.cjs",
+      "default": "./dist/helper/log.mjs"
+    },
+    "./helper/object": {
+      "types": "./dist/helper/object.d.ts",
+      "import": "./dist/helper/object.mjs",
+      "require": "./dist/helper/object.cjs",
+      "default": "./dist/helper/object.mjs"
     },
     "./package.json": "./package.json"
   },

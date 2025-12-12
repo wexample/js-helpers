@@ -1,7 +1,12 @@
 import {defineConfig} from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/helper/string.ts'],
+  entry: [
+    'src/index.ts',
+    'src/helper/string.ts',
+    'src/helper/log.ts',
+    'src/helper/object.ts',
+  ],
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
