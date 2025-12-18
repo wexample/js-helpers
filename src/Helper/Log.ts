@@ -10,7 +10,7 @@ export const COLORS = {
 
 type ColorValue = keyof typeof COLORS | string;
 
-export function color(text: string, colorCode: ColorValue = COLORS.gray): string {
+export function logColor(text: string, colorCode: ColorValue = COLORS.gray): string {
   const resolved = typeof colorCode === 'string' && colorCode in COLORS
     ? COLORS[colorCode as keyof typeof COLORS]
     : colorCode || COLORS.gray;
@@ -20,7 +20,7 @@ export function color(text: string, colorCode: ColorValue = COLORS.gray): string
 
 export function logTitle(title: string, colorCode: ColorValue = COLORS.cyan): void {
   console.log('');
-  console.log(color(`# ${String(title).toUpperCase()}`, colorCode));
+  console.log(logColor(`# ${String(title).toUpperCase()}`, colorCode));
 }
 
 export function logPath(
@@ -29,7 +29,7 @@ export function logPath(
   labelColor: ColorValue = COLORS.gray,
   valueColor: ColorValue = COLORS.yellow
 ): void {
-  console.log(`${color(label, labelColor)} ${color(value, valueColor)}`);
+  console.log(`${logColor(label, labelColor)} ${logColor(value, valueColor)}`);
 }
 
 export function logEntry(
@@ -37,17 +37,9 @@ export function logEntry(
   entry: {output: string; source: string}
 ): void {
   console.log(
-    `${color('•', COLORS.green)} ${color(action, COLORS.blue)} ${color(entry.output, COLORS.yellow)}`
+    `${logColor('•', COLORS.green)} ${logColor(action, COLORS.blue)} ${logColor(entry.output, COLORS.yellow)}`
   );
   console.log(
-    `    ${color('from', COLORS.gray)} ${color(entry.source, COLORS.gray)}`
+    `    ${logColor('from', COLORS.gray)} ${logColor(entry.source, COLORS.gray)}`
   );
 }
-
-export default {
-  COLORS,
-  color,
-  logTitle,
-  logPath,
-  logEntry,
-};

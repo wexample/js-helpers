@@ -30,4 +30,3 @@ export function stringToKebab(value?: unknown): string {
   return kebab || 'index';
 }
 
-export default stringToKebab;

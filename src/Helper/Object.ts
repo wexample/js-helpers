@@ -1,4 +1,4 @@
-export function mergeDeep<T extends Record<string, any>, U extends Record<string, any>>(
+export function objectMergeDeep<T extends Record<string, any>, U extends Record<string, any>>(
   target: T = {} as T,
   source: U = {} as U
 ): T & U {
@@ -6,7 +6,7 @@ export function mergeDeep<T extends Record<string, any>, U extends Record<string
 
   Object.entries(source || {}).forEach(([key, value]) => {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
-      output[key] = mergeDeep(
+      output[key] = objectMergeDeep(
         typeof output[key] === 'object' && output[key] !== null
           ? output[key]
           : {},
@@ -19,5 +19,3 @@ export function mergeDeep<T extends Record<string, any>, U extends Record<string
 
   return output as T & U;
 }
-
-export default mergeDeep;

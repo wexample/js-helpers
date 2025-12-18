@@ -1,42 +1,48 @@
-export default abstract class {
-  public isReady: boolean = false;
-  public readyCallbacks: Function[] = [];
+import { functionIsType } from "../Helper/Function";
 
-  async(callback) {
-    setTimeout(callback);
+type AnyFn<TThis, TArgs extends unknown[]> =
+  (this: TThis, ...args: TArgs) => void | Promise<void>;
+
+export default abstract class AsyncConstructor<TArgs extends unknown[] = unknown[]> {
+  private _isReady = false;
+  private _readyArgs: TArgs | null = null;
+  private readonly readyCallbacks: Array<AnyFn<this, TArgs>> = [];
+
+  get isReady(): boolean {
+    return this._isReady;
   }
 
-  ready(callback: Function) {
-    if (this.isReady) {
-      this.async(callback());
-    } else {
-      this.readyCallbacks.push(callback);
+  protected defer(fn: () => void): void {
+    if (typeof queueMicrotask === "function") queueMicrotask(fn);
+    else setTimeout(fn, 0);
+  }
+
+  ready(cb: AnyFn<this, TArgs>): void {
+    if (this._isReady) {
+      const args = this._readyArgs ?? ([] as unknown as TArgs);
+      this.defer(() => void cb.apply(this, args));
+      return;
     }
+    this.readyCallbacks.push(cb);
   }
 
-  async readyComplete(...args: any[]) {
-    this.isReady = true;
-    // Launch callbacks.
-    await this.callbacks(this.readyCallbacks, args);
-  }
+  protected async readyComplete(...args: TArgs): Promise<void> {
+    if (this._isReady) return;
 
-  /**
-   * Execute an array of callbacks functions.
-   */
-  async callbacks(callbacksArray, args = [], thisArg = null) {
-    let method = args ? 'apply' : 'call';
-    let callback = null;
+    this._isReady = true;
+    this._readyArgs = args;
 
-    while ((callback = callbacksArray.shift())) {
-      if (!callback) {
-        throw 'Trying to execute undefined callback.';
+    const callbacks = this.readyCallbacks.splice(0);
+
+    for (const cb of callbacks) {
+      if (!functionIsType(cb)) {
+        throw new TypeError("Ready callback must be a function.");
       }
-
-      await callback[method](thisArg || this, args);
+      await cb.apply(this, args);
     }
   }
 
-  seal() {
+  protected seal(): void {
     Object.seal(this);
   }
 }
