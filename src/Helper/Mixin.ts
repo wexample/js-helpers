@@ -1,4 +1,4 @@
-type Constructor<T = any> = new (...args: any[]) => T;
+type Constructor<T = any> = abstract new (...args: any[]) => T;
 
 /**
  * Apply mixin classes to a target class (TypeScript-compatible).
