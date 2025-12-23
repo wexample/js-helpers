@@ -1,12 +1,7 @@
 import {defineConfig} from 'tsup';
 
 export default defineConfig({
-  entry: [
-    'src/index.ts',
-    'src/helper/string.ts',
-    'src/helper/log.ts',
-    'src/helper/object.ts',
-  ],
+  entry: ['src/**/*.ts'],
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
@@ -16,5 +11,5 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   skipNodeModulesBundle: true,
-  outDir: 'dist'
+  outDir: 'dist',
 });
