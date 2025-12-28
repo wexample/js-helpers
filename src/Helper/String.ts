@@ -203,6 +203,15 @@ export function stringPathToTagName(text: string): string {
   return text.split('/').join('-').toLowerCase();
 }
 
+/**
+ * Build a stable identifier from a string.
+ *
+ * Rules (kept in sync with PHP `DomHelper::buildStringIdentifier()`):
+ * - Replace any non [a-zA-Z0-9-] character with '-'
+ * - Convert to kebab-case
+ * - Collapse multiple '-' into one and trim '-' at both ends
+ * - Keep legacy behavior by removing dashes before numbers (e.g. "vue-2" -> "vue2")
+ */
 export function stringBuildIdentifier(input: string): string {
   const kebab = stringToKebab(
     input
@@ -210,6 +219,7 @@ export function stringBuildIdentifier(input: string): string {
   );
 
   return kebab
+    .replace(/-(\d)/g, '$1')
     .replace(/-+/g, '-')
     .replace(/^[-]+|[-]+$/g, '');
 }
