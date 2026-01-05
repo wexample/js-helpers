@@ -1,6 +1,8 @@
-# js_helpers
+# @wexample/js-helpers
 
-Version: 0.0.3
+Version: 0.0.6
+
+Modern, type-safe helper utilities for Wexample projects.
 
 ## Table of Contents
 
@@ -111,7 +113,7 @@ Free to use in both personal and commercial projects.
 
 ## Integration in the Suite
 
-This package is part of the **Wexample Suite** — a collection of high-quality Python packages designed to work seamlessly together.
+This package is part of the Wexample Suite — a collection of high-quality, modular tools designed to work seamlessly together across multiple languages and environments.
 
 ### Related Packages
 
