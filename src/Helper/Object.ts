@@ -2,14 +2,12 @@ export function objectMergeDeep<T extends Record<string, any>, U extends Record<
   target: T = {} as T,
   source: U = {} as U
 ): T & U {
-  const output: Record<string, any> = {...target};
+  const output: Record<string, any> = { ...target };
 
   Object.entries(source || {}).forEach(([key, value]) => {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       output[key] = objectMergeDeep(
-        typeof output[key] === 'object' && output[key] !== null
-          ? output[key]
-          : {},
+        typeof output[key] === 'object' && output[key] !== null ? output[key] : {},
         value as Record<string, any>
       );
     } else {
@@ -21,7 +19,7 @@ export function objectMergeDeep<T extends Record<string, any>, U extends Record<
 }
 
 export function objectToType(value: unknown): string {
-  return ({}).toString.call(value).match(/([a-z]+)(:?\])/i)?.[1] ?? typeof value;
+  return {}.toString.call(value).match(/([a-z]+)(:?\])/i)?.[1] ?? typeof value;
 }
 
 export function objectIsPlainObject(value: unknown): value is Record<PropertyKey, unknown> {
@@ -76,7 +74,7 @@ export function objectDeepAssignWithOptions(options: {
         const targetProto = Object.getPrototypeOf(target);
         const sourceProto = Object.getPrototypeOf(source);
         if (targetProto && sourceProto) {
-          objectDeepAssignWithOptions({...mergedOptions, proto: false})(targetProto, sourceProto);
+          objectDeepAssignWithOptions({ ...mergedOptions, proto: false })(targetProto, sourceProto);
         }
       }
     });

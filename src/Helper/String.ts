@@ -34,10 +34,7 @@ function normalizeWords(value?: string | null): string[] {
   // Split multiple caps like "JSONParser" -> "JSON Parser".
   text = text.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
 
-  return text
-    .toLowerCase()
-    .split(/\s+/)
-    .filter(Boolean);
+  return text.toLowerCase().split(/\s+/).filter(Boolean);
 }
 
 // Casing conversions
@@ -60,11 +57,19 @@ export function stringToPathCase(value: string): string {
 export function stringToCamelCase(value: string): string {
   const words = normalizeWords(value);
   if (!words.length) return '';
-  return words[0] + words.slice(1).map((w) => stringCapitalizeFirst(w)).join('');
+  return (
+    words[0] +
+    words
+      .slice(1)
+      .map((w) => stringCapitalizeFirst(w))
+      .join('')
+  );
 }
 
 export function stringToPascalCase(value: string): string {
-  return normalizeWords(value).map((w) => stringCapitalizeFirst(w)).join('');
+  return normalizeWords(value)
+    .map((w) => stringCapitalizeFirst(w))
+    .join('');
 }
 
 export function stringToConstantCase(value: string): string {
@@ -72,7 +77,9 @@ export function stringToConstantCase(value: string): string {
 }
 
 export function stringToTitleCase(value: string): string {
-  return normalizeWords(value).map((w) => stringCapitalizeFirst(w)).join(' ');
+  return normalizeWords(value)
+    .map((w) => stringCapitalizeFirst(w))
+    .join(' ');
 }
 
 export function stringConvertCaseMap(): Record<string, (text: string) => string> {
@@ -88,11 +95,16 @@ export function stringConvertCaseMap(): Record<string, (text: string) => string>
   };
 }
 
-export function stringConvertCase(text: string, toFormat: keyof ReturnType<typeof stringConvertCaseMap>): string {
+export function stringConvertCase(
+  text: string,
+  toFormat: keyof ReturnType<typeof stringConvertCaseMap>
+): string {
   const converters = stringConvertCaseMap();
   const converter = converters[toFormat];
   if (!converter) {
-    throw new Error(`Invalid format '${toFormat}'. Must be one of: ${Object.keys(converters).join(', ')}`);
+    throw new Error(
+      `Invalid format '${toFormat}'. Must be one of: ${Object.keys(converters).join(', ')}`
+    );
   }
   return converter(text);
 }
@@ -185,14 +197,16 @@ export function stringToKebab(text: string): string {
 }
 
 export function stringToSnake(text: string): string {
-  return text
-    // Add underscore between lower and upper letters
-    .replace(/(\p{Lu}+)(\p{Lu}\p{Ll})/gu, '$1_$2')
-    // Add underscore between lower and number
-    .replace(/([\p{Ll}0-9])(\p{Lu})/gu, '$1_$2')
-    // Remove dash before numbers
-    .replace(/-(\d)/g, '$1')
-    .toLowerCase();
+  return (
+    text
+      // Add underscore between lower and upper letters
+      .replace(/(\p{Lu}+)(\p{Lu}\p{Ll})/gu, '$1_$2')
+      // Add underscore between lower and number
+      .replace(/([\p{Ll}0-9])(\p{Lu})/gu, '$1_$2')
+      // Remove dash before numbers
+      .replace(/-(\d)/g, '$1')
+      .toLowerCase()
+  );
 }
 
 export function stringToScreamingSnake(text: string): string {
@@ -213,10 +227,7 @@ export function stringPathToTagName(text: string): string {
  * - Keep legacy behavior by removing dashes before numbers (e.g. "vue-2" -> "vue2")
  */
 export function stringBuildIdentifier(input: string): string {
-  const kebab = stringToKebab(
-    input
-      .replace(/[^a-zA-Z0-9-]/g, '-')
-  );
+  const kebab = stringToKebab(input.replace(/[^a-zA-Z0-9-]/g, '-'));
 
   return kebab
     .replace(/-(\d)/g, '$1')
@@ -273,11 +284,7 @@ export function stringGenerateLoremIpsum(length = 100): string {
   const text = `${LOREM_BASE} `.repeat(Math.floor(length / (LOREM_BASE.length + 1)) + 1);
   let cut = text.slice(0, length).trimEnd();
 
-  if (
-    cut.length === length &&
-    length < text.length &&
-    !/[ .,!?;:]$/.test(cut)
-  ) {
+  if (cut.length === length && length < text.length && !/[ .,!?;:]$/.test(cut)) {
     const lastSpace = cut.lastIndexOf(' ');
     if (lastSpace > 0) {
       cut = cut.slice(0, lastSpace);

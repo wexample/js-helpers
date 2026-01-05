@@ -8,6 +8,6 @@ export const VARIABLES = {
   PLURAL_PAGE: 'pages',
 } as const;
 
-export type VariablesValue = typeof VARIABLES[keyof typeof VARIABLES];
+export type VariablesValue = (typeof VARIABLES)[keyof typeof VARIABLES];
 
 export default VARIABLES;

@@ -15,7 +15,7 @@ export function locationHashParamSet(name: string, value: string, ignoreHistory 
   const params = locationParamReload();
   params.set(name, value);
 
-  const {pathname, search} = window.location;
+  const { pathname, search } = window.location;
   locationUpdate(`${pathname}${search}#${params.toString()}`, ignoreHistory);
 }
 
@@ -27,13 +27,17 @@ export function locationUpdate(href: string, ignoreHistory = false): void {
   }
 
   const method: 'pushState' | 'replaceState' = ignoreHistory ? 'replaceState' : 'pushState';
-  window.history[method]({manualState: true}, document.title, nextHref);
+  window.history[method]({ manualState: true }, document.title, nextHref);
 }
 
 export function locationDetectLanguageAndRedirect(
-  config: Record<string, string> & {_default: string}
+  config: Record<string, string> & { _default: string }
 ): void {
-  const userLanguage = (navigator.language || (navigator as unknown as {userLanguage?: string})?.userLanguage || '').toLowerCase();
+  const userLanguage = (
+    navigator.language ||
+    (navigator as unknown as { userLanguage?: string })?.userLanguage ||
+    ''
+  ).toLowerCase();
   const currentPath = window.location.pathname;
 
   const redirectUrls = Object.values(config);

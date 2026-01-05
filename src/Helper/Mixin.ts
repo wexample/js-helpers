@@ -4,10 +4,7 @@ type Constructor<T = any> = abstract new (...args: any[]) => T;
  * Apply mixin classes to a target class (TypeScript-compatible).
  * Copy prototype properties (except constructor) and static props.
  */
-export function mixinApply(
-  targetCtor: Constructor,
-  mixins: Constructor[]
-): void {
+export function mixinApply(targetCtor: Constructor, mixins: Constructor[]): void {
   mixins.forEach((mixinCtor) => {
     // Copy instance members (prototype).
     Object.getOwnPropertyNames(mixinCtor.prototype).forEach((name) => {
