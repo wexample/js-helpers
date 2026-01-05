@@ -1,7 +1,6 @@
-import { functionIsType } from "../Helper/Function";
+import { functionIsType } from '../Helper/Function';
 
-type AnyFn<TThis, TArgs extends unknown[]> =
-  (this: TThis, ...args: TArgs) => void | Promise<void>;
+type AnyFn<TThis, TArgs extends unknown[]> = (this: TThis, ...args: TArgs) => void | Promise<void>;
 
 export default abstract class AsyncConstructor<TArgs extends unknown[] = unknown[]> {
   private _isReady = false;
@@ -13,7 +12,7 @@ export default abstract class AsyncConstructor<TArgs extends unknown[] = unknown
   }
 
   protected defer(fn: () => void): void {
-    if (typeof queueMicrotask === "function") queueMicrotask(fn);
+    if (typeof queueMicrotask === 'function') queueMicrotask(fn);
     else setTimeout(fn, 0);
   }
 
@@ -36,7 +35,7 @@ export default abstract class AsyncConstructor<TArgs extends unknown[] = unknown
 
     for (const cb of callbacks) {
       if (!functionIsType(cb)) {
-        throw new TypeError("Ready callback must be a function.");
+        throw new TypeError('Ready callback must be a function.');
       }
       await cb.apply(this, args);
     }

@@ -27,4 +27,4 @@ export const EVENT = {
   POINTERUP: 'pointerup',
 } as const;
 
-export type EventName = typeof EVENT[keyof typeof EVENT];
+export type EventName = (typeof EVENT)[keyof typeof EVENT];

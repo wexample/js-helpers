@@ -48,7 +48,7 @@ export function domFindScrollParent(element: HTMLElement, includeHidden = false)
     return document.body;
   }
 
-  for (let parent: HTMLElement | null = element; (parent = parent.parentElement);) {
+  for (let parent: HTMLElement | null = element; (parent = parent.parentElement); ) {
     const parentStyle = getComputedStyle(parent);
 
     if (excludeStaticParent && parentStyle.position === 'static') {
@@ -85,7 +85,11 @@ export function domRemoveAllClasses(el: HTMLElement, classesToRemove: Iterable<s
   }
 }
 
-export function domReplaceByOneClass(el: HTMLElement, newState: string, classesToRemove: Iterable<string>): void {
+export function domReplaceByOneClass(
+  el: HTMLElement,
+  newState: string,
+  classesToRemove: Iterable<string>
+): void {
   domRemoveAllClasses(el, classesToRemove);
   el.classList.add(newState);
 }
