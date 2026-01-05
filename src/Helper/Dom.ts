@@ -48,16 +48,18 @@ export function domFindScrollParent(element: HTMLElement, includeHidden = false)
     return document.body;
   }
 
-  for (let parent: HTMLElement | null = element; (parent = parent.parentElement); ) {
+  let parent: HTMLElement | null = element.parentElement;
+  while (parent) {
     const parentStyle = getComputedStyle(parent);
 
-    if (excludeStaticParent && parentStyle.position === 'static') {
-      continue;
-    }
-
-    if (overflowRegex.test(parentStyle.overflow + parentStyle.overflowY + parentStyle.overflowX)) {
+    if (
+      (!excludeStaticParent || parentStyle.position !== 'static') &&
+      overflowRegex.test(parentStyle.overflow + parentStyle.overflowY + parentStyle.overflowX)
+    ) {
       return parent;
     }
+
+    parent = parent.parentElement;
   }
 
   return document.body;
