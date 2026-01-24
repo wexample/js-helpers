@@ -1,4 +1,4 @@
-import { functionIsType } from '../Helper/Function';
+import { functionIsType } from '../Helper/Function.js';
 
 type AnyFn<TThis, TArgs extends unknown[]> = (this: TThis, ...args: TArgs) => void | Promise<void>;
 
