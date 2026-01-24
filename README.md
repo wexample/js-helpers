@@ -1,6 +1,6 @@
 # @wexample/js-helpers
 
-Version: 0.0.19
+Version: 0.0.20
 
 Modern, type-safe helper utilities for Wexample projects.
 
