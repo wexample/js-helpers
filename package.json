@@ -4,23 +4,10 @@
   "description": "Modern, type-safe helper utilities for Wexample projects.",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "require": "./dist/*.cjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist"
-  ],
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsup",
-    "build:watch": "tsup --watch",
-    "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck",
     "prepublishOnly": "npm run build"
   },
