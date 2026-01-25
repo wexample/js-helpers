@@ -19,6 +19,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsup",
+    "build:watch": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck",
     "prepublishOnly": "npm run build"
