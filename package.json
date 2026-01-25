@@ -1,13 +1,13 @@
 {
   "name": "@wexample/js-helpers",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Modern, type-safe helper utilities for Wexample projects.",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsup",
+    "build": "npm run clean && tsc",
     "lint": "npm run typecheck",
     "prepublishOnly": "npm run build"
   },
@@ -33,15 +33,8 @@
   ],
   "exports": {
     "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*"
-      ]
+      "types": "./dist/*",
+      "default": "./dist/*"
     }
   }
 }
