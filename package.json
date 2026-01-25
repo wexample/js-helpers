@@ -1,6 +1,6 @@
 {
   "name": "@wexample/js-helpers",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Modern, type-safe helper utilities for Wexample projects.",
   "license": "MIT",
   "type": "module",
