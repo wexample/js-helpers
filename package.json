@@ -6,8 +6,8 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "npm run clean && tsc",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck",
     "prepublishOnly": "npm run build"
   },
@@ -29,12 +29,12 @@
   },
   "repository": "https://github.com/wexample/js-helpers",
   "files": [
-    "dist"
+    "src"
   ],
   "exports": {
     "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
     }
   }
 }
