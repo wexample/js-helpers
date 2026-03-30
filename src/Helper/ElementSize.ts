@@ -8,8 +8,7 @@ export const waitForElementSize = (
     return Promise.resolve();
   }
 
-  const hasSize = () =>
-    (ready ? ready(el) : el.getBoundingClientRect().height >= minHeight);
+  const hasSize = () => (ready ? ready(el) : el.getBoundingClientRect().height >= minHeight);
 
   if (hasSize()) {
     return Promise.resolve();

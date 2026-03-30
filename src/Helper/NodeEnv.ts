@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-export function nodeEnvReadVarFromDotEnvFiles(variableName: string, envFiles: string[] = ['.env.local', '.env.build', '.env']): string | null {
+export function nodeEnvReadVarFromDotEnvFiles(
+  variableName: string,
+  envFiles: string[] = ['.env.local', '.env.build', '.env']
+): string | null {
   for (const envFile of envFiles) {
     const envPath = path.resolve(process.cwd(), envFile);
     if (!fs.existsSync(envPath)) {

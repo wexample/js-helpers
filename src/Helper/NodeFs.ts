@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-export function nodeFsListFilesRecursively(rootPath: string, ignoredDirectoryNames: string[] = ['.git', 'node_modules']): string[] {
+export function nodeFsListFilesRecursively(
+  rootPath: string,
+  ignoredDirectoryNames: string[] = ['.git', 'node_modules']
+): string[] {
   const files: string[] = [];
   const directories = [rootPath];
 

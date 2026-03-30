@@ -37,9 +37,10 @@ export function serializeForLog(
       name: err.name,
       message: err.message,
       stack: err.stack,
-      cause: typeof err.cause === 'undefined'
-        ? undefined
-        : serializeForLog(err.cause, options, depth + 1, seen),
+      cause:
+        typeof err.cause === 'undefined'
+          ? undefined
+          : serializeForLog(err.cause, options, depth + 1, seen),
     };
   }
 

@@ -75,7 +75,7 @@ export function reconnectBackoffBaseDelay(
 ): number {
   const resolved = reconnectBackoffResolveOptions(options);
   const safeAttempt = Math.max(1, attempt);
-  const baseDelay = resolved.initialDelayMs * Math.pow(resolved.factor, safeAttempt - 1);
+  const baseDelay = resolved.initialDelayMs * resolved.factor ** (safeAttempt - 1);
 
   return Math.min(resolved.maxDelayMs, baseDelay);
 }

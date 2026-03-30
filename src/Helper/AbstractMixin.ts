@@ -4,7 +4,7 @@ export default abstract class AbstractMixin {
     apply: (instance: any) => void,
     flag?: string
   ): boolean {
-    const key = flag || `__mixin_${this.name}`;
+    const key = flag || `__mixin_${AbstractMixin.name}`;
 
     if (instance[key]) {
       return false;
