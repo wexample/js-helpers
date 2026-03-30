@@ -1,9 +1,6 @@
 import { waitForTransitionEnd } from './Transition';
 
-export const expandHeight = async (
-  el: HTMLElement,
-  propertyName = 'height'
-): Promise<void> => {
+export const expandHeight = async (el: HTMLElement, propertyName = 'height'): Promise<void> => {
   el.style.height = '0px';
   el.style.overflow = 'hidden';
   void el.offsetHeight;
@@ -14,10 +11,7 @@ export const expandHeight = async (
   el.style.overflow = '';
 };
 
-export const collapseHeight = async (
-  el: HTMLElement,
-  propertyName = 'height'
-): Promise<void> => {
+export const collapseHeight = async (el: HTMLElement, propertyName = 'height'): Promise<void> => {
   el.style.height = `${el.scrollHeight}px`;
   el.style.overflow = 'hidden';
   void el.offsetHeight;

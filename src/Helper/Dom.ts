@@ -111,12 +111,7 @@ export function domScrollToBottom(
     return;
   }
 
-  const {
-    container = null,
-    behavior = 'auto',
-    retries = 0,
-    includeHidden = false,
-  } = options;
+  const { container = null, behavior = 'auto', retries = 0, includeHidden = false } = options;
 
   const scrollContainer = container ?? domFindScrollParent(anchorElement, includeHidden);
   if (!scrollContainer) {
