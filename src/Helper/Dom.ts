@@ -20,6 +20,13 @@ export const DOM_TAG_NAME = {
   SCRIPT: 'script',
 } as const;
 
+export type DomScrollToBottomOptions = {
+  container?: HTMLElement | null;
+  behavior?: ScrollBehavior;
+  retries?: number;
+  includeHidden?: boolean;
+};
+
 export function domAppendInnerHtml(el: HTMLElement, html: string): void {
   el.insertAdjacentHTML(DOM_INSERT_POSITION.BEFORE_END, html);
 }
@@ -94,4 +101,47 @@ export function domReplaceByOneClass(
 ): void {
   domRemoveAllClasses(el, classesToRemove);
   el.classList.add(newState);
+}
+
+export function domScrollToBottom(
+  anchorElement: HTMLElement | null,
+  options: DomScrollToBottomOptions = {}
+): void {
+  if (!anchorElement) {
+    return;
+  }
+
+  const {
+    container = null,
+    behavior = 'auto',
+    retries = 0,
+    includeHidden = false,
+  } = options;
+
+  const scrollContainer = container ?? domFindScrollParent(anchorElement, includeHidden);
+  if (!scrollContainer) {
+    return;
+  }
+
+  const targetTop = scrollContainer.scrollHeight;
+
+  if (typeof scrollContainer.scrollTo === 'function') {
+    scrollContainer.scrollTo({
+      top: targetTop,
+      behavior,
+    });
+  } else {
+    scrollContainer.scrollTop = targetTop;
+  }
+
+  if (retries > 0) {
+    window.requestAnimationFrame(() => {
+      domScrollToBottom(anchorElement, {
+        container: scrollContainer,
+        behavior,
+        retries: retries - 1,
+        includeHidden,
+      });
+    });
+  }
 }
