@@ -1,3 +1,7 @@
+docker:
+  db: {}
+domains: []
 global:
   name: js_helpers
-  version: 0.0.37
+  type: app
+  version: 6.0.19
