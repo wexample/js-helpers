@@ -1,18 +1,3 @@
-# @wexample/js-helpers
-
-Version: 0.0.55
-
-`@wexample/js-helpers` is a TypeScript utility library for the JavaScript side of the Wexample Suite: about thirty single-domain modules under src/Helper and src/Common, covering string casing (`stringToKebabCase`), DOM traversal (`domFindScrollParent`), filesystem walks (`nodeFsListFilesRecursively`), plus timing, queues, animation and reconnect backoff. Exports are plain named functions prefixed by their domain, so browser-only and Node-only code stay in separate files and nothing is pulled in that a caller did not import. The package ships its sources rather than a bundle — `exports` maps `./*` to `./src/*.ts` — leaving compilation to the consuming project, which needs Node 18 or later.
-
-## Table of Contents
-
-- [Architecture](#architecture)
-- [Integration in the Suite](#integration-in-the-suite)
-- [Versioning & Compatibility Policy](#versioning--compatibility-policy)
-- [License](#license)
-- [About us](#about-us)
-- [Migration Notes](#migration-notes)
-
 ## Architecture
 
 ### Two directories, one rule each
@@ -100,43 +85,3 @@ No module holds mutable module-level state. The only exported `const` are litera
 `npm run build`, `npm run typecheck` and `npm run lint` all run `tsc --noEmit`. There is no test suite and no emitted artifact: type-checking is the whole verification step, under `"strict": true`. Publication is `npm publish --access public` from `.github/workflows/publish.yml`, triggered on `v*` tags, and `prepublishOnly` runs the build first.
 
 tsup.config.ts configures a dual ESM/CJS bundle with `dts: true` into `dist/`, and `tsup` is a devDependency — but no script invokes it, and `dist/` is not in `files`. The shipped package is the source tree; treat the tsup config as an unused alternative path, not as the build.
-
-## Integration in the Suite
-
-This package is part of the Wexample Suite — a collection of high-quality, modular tools designed to work seamlessly together across multiple languages and environments.
-
-### Related Packages
-
-The suite includes packages for configuration management, file handling, prompts, and more. Each package can be used independently or as part of the integrated suite.
-
-Visit the [Wexample Suite documentation](https://docs.wexample.com) for the complete package ecosystem.
-
-## Versioning & Compatibility Policy
-
-Wexample packages follow **Semantic Versioning** (SemVer):
-
-- **MAJOR**: Breaking changes
-- **MINOR**: New features, backward compatible
-- **PATCH**: Bug fixes, backward compatible
-
-We maintain backward compatibility within major versions and provide clear migration guides for breaking changes.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-Free to use in both personal and commercial projects.
-
-## About us
-
-[Wexample](https://wexample.com) stands as a cornerstone of the digital ecosystem — a collective of seasoned engineers, researchers, and creators driven by a relentless pursuit of technological excellence. More than a media platform, it has grown into a vibrant community where innovation meets craftsmanship, and where every line of code reflects a commitment to clarity, durability, and shared intelligence.
-
-This packages suite embodies this spirit. Trusted by professionals and enthusiasts alike, it delivers a consistent, high-quality foundation for modern development — open, elegant, and battle-tested. Its reputation is built on years of collaboration, refinement, and rigorous attention to detail, making it a natural choice for those who demand both robustness and beauty in their tools.
-
-Wexample cultivates a culture of mastery. Each package, each contribution carries the mark of a community that values precision, ethics, and innovation — a community proud to shape the future of digital craftsmanship.
-
-## Migration Notes
-
-When upgrading between major versions, refer to the migration guides in the documentation.
-
-Breaking changes are clearly documented with upgrade paths and examples.
