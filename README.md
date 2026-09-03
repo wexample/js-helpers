@@ -1,6 +1,6 @@
 # @wexample/js-helpers
 
-Version: 0.0.55
+Version: 0.0.56
 
 `@wexample/js-helpers` is a TypeScript utility library for the JavaScript side of the Wexample Suite: about thirty single-domain modules under src/Helper and src/Common, covering string casing (`stringToKebabCase`), DOM traversal (`domFindScrollParent`), filesystem walks (`nodeFsListFilesRecursively`), plus timing, queues, animation and reconnect backoff. Exports are plain named functions prefixed by their domain, so browser-only and Node-only code stay in separate files and nothing is pulled in that a caller did not import. The package ships its sources rather than a bundle — `exports` maps `./*` to `./src/*.ts` — leaving compilation to the consuming project, which needs Node 18 or later.
 
