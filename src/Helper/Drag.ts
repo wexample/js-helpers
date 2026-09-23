@@ -40,7 +40,8 @@ export function dragAxis(options: DragAxisOptions): () => void {
   let current = 0;
   let bodyUserSelect = '';
 
-  const coordinate = (event: PointerEvent): number => (axis === 'x' ? event.clientX : event.clientY);
+  const coordinate = (event: PointerEvent): number =>
+    axis === 'x' ? event.clientX : event.clientY;
 
   const clamp = (size: number): number => {
     const min = options.min ? options.min() : 0;
