@@ -19,6 +19,30 @@ export function locationHashParamSet(name: string, value: string, ignoreHistory 
   locationUpdate(`${pathname}${search}#${params.toString()}`, ignoreHistory);
 }
 
+// The query string is where what a page shows belongs — a document opened, a
+// filter set — since it is what an address is made to share and what the server
+// sees. The hash is left to what only the browser needs to know.
+export function locationQueryParamGet(name: string, defaultValue = ''): string {
+  const value = new URLSearchParams(window.location.search).get(name);
+  return value !== null ? value : defaultValue;
+}
+
+// An empty value removes the parameter rather than writing it empty: an address
+// that says nothing about a thing is the address before that thing was chosen.
+export function locationQueryParamSet(name: string, value: string, ignoreHistory = false): void {
+  const params = new URLSearchParams(window.location.search);
+
+  if (value === '') {
+    params.delete(name);
+  } else {
+    params.set(name, value);
+  }
+
+  const query = params.toString();
+  const { pathname, hash } = window.location;
+  locationUpdate(`${pathname}${query ? `?${query}` : ''}${hash}`, ignoreHistory);
+}
+
 export function locationUpdate(href: string, ignoreHistory = false): void {
   let nextHref = href;
 
