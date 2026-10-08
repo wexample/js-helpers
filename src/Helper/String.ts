@@ -313,24 +313,34 @@ export function stringTruncate(text: string, limit: number): string {
   return text.length > limit ? `${text.slice(0, Math.max(0, limit - 3))}...` : text;
 }
 
-const STRING_HASH_OFFSET = 0xcbf29ce484222325n;
-const STRING_HASH_PRIME = 0x100000001b3n;
-const STRING_HASH_MASK = 0xffffffffffffffffn;
-
 /**
  * A short, stable hash of a text — FNV-1a over its UTF-8 bytes, 64 bits, as
  * 16 hexadecimal characters: what tells two texts are the same, never what
  * hides one. Synchronous and available everywhere, where `crypto.subtle`
  * is async and missing outside secure contexts.
+ *
+ * The 64 bits are held as four 16-bit limbs, least significant first, rather
+ * than in a BigInt: the apps compiling this source may target below ES2020.
  */
 export function stringHash(text: string): string {
-  let hash = STRING_HASH_OFFSET;
+  // 0xcbf29ce484222325, the FNV offset basis.
+  let [h0, h1, h2, h3] = [0x2325, 0x8422, 0x9ce4, 0xcbf2];
 
-  for (const byte of new TextEncoder().encode(text)) {
-    hash = ((hash ^ BigInt(byte)) * STRING_HASH_PRIME) & STRING_HASH_MASK;
+  const bytes = new TextEncoder().encode(text);
+
+  for (let index = 0; index < bytes.length; index++) {
+    h0 ^= bytes[index];
+
+    // Times the FNV prime 0x100000001b3 = 2^40 + 0x1b3, modulo 2^64.
+    const t0 = h0 * 0x1b3;
+    const t1 = h1 * 0x1b3 + (t0 >>> 16);
+    const t2 = h2 * 0x1b3 + h0 * 0x100 + (t1 >>> 16);
+    const t3 = h3 * 0x1b3 + h1 * 0x100 + (t2 >>> 16);
+
+    [h0, h1, h2, h3] = [t0 & 0xffff, t1 & 0xffff, t2 & 0xffff, t3 & 0xffff];
   }
 
-  return hash.toString(16).padStart(16, '0');
+  return [h3, h2, h1, h0].map((limb) => limb.toString(16).padStart(4, '0')).join('');
 }
 
 export default stringToKebab;
