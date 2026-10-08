@@ -313,4 +313,24 @@ export function stringTruncate(text: string, limit: number): string {
   return text.length > limit ? `${text.slice(0, Math.max(0, limit - 3))}...` : text;
 }
 
+const STRING_HASH_OFFSET = 0xcbf29ce484222325n;
+const STRING_HASH_PRIME = 0x100000001b3n;
+const STRING_HASH_MASK = 0xffffffffffffffffn;
+
+/**
+ * A short, stable hash of a text — FNV-1a over its UTF-8 bytes, 64 bits, as
+ * 16 hexadecimal characters: what tells two texts are the same, never what
+ * hides one. Synchronous and available everywhere, where `crypto.subtle`
+ * is async and missing outside secure contexts.
+ */
+export function stringHash(text: string): string {
+  let hash = STRING_HASH_OFFSET;
+
+  for (const byte of new TextEncoder().encode(text)) {
+    hash = ((hash ^ BigInt(byte)) * STRING_HASH_PRIME) & STRING_HASH_MASK;
+  }
+
+  return hash.toString(16).padStart(16, '0');
+}
+
 export default stringToKebab;
