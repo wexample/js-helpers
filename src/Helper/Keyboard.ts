@@ -11,19 +11,49 @@ export type KeyboardShortcut = {
   meta: boolean;
 };
 
-const KEYBOARD_MODIFIERS = ['mod', 'ctrl', 'control', 'alt', 'option', 'shift', 'meta', 'cmd', 'command'];
+const KEYBOARD_MODIFIERS = [
+  'mod',
+  'ctrl',
+  'control',
+  'alt',
+  'option',
+  'shift',
+  'meta',
+  'cmd',
+  'command',
+];
 
 // What a key is called for a person, on a Mac (its symbols) and elsewhere.
 const KEYBOARD_LABELS_MAC: Record<string, string> = {
-  ctrl: '⌃', alt: '⌥', shift: '⇧', meta: '⌘',
-  enter: '↩', escape: 'esc', backspace: '⌫', delete: '⌦', tab: '⇥',
-  arrowup: '↑', arrowdown: '↓', arrowleft: '←', arrowright: '→',
+  ctrl: '⌃',
+  alt: '⌥',
+  shift: '⇧',
+  meta: '⌘',
+  enter: '↩',
+  escape: 'esc',
+  backspace: '⌫',
+  delete: '⌦',
+  tab: '⇥',
+  arrowup: '↑',
+  arrowdown: '↓',
+  arrowleft: '←',
+  arrowright: '→',
 };
 
 const KEYBOARD_LABELS: Record<string, string> = {
-  ctrl: 'Ctrl', alt: 'Alt', shift: 'Shift', meta: 'Win',
-  enter: 'Enter', escape: 'Esc', backspace: 'Backspace', delete: 'Del', tab: 'Tab',
-  arrowup: '↑', arrowdown: '↓', arrowleft: '←', arrowright: '→',
+  ctrl: 'Ctrl',
+  alt: 'Alt',
+  shift: 'Shift',
+  meta: 'Win',
+  enter: 'Enter',
+  escape: 'Esc',
+  backspace: 'Backspace',
+  delete: 'Del',
+  tab: 'Tab',
+  arrowup: '↑',
+  arrowdown: '↓',
+  arrowleft: '←',
+  arrowright: '→',
 };
 
 // A Mac, an iPhone or an iPad: where the command key does what Ctrl does
@@ -33,15 +63,22 @@ export function keyboardIsMac(): boolean {
     return false;
   }
 
-  const platform = (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform
-    || navigator.platform
-    || navigator.userAgent;
+  const platform =
+    (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform ||
+    navigator.platform ||
+    navigator.userAgent;
 
   return /mac|iphone|ipad|ipod/i.test(platform);
 }
 
-export function keyboardShortcutParse(combo: string, isMac: boolean = keyboardIsMac()): KeyboardShortcut {
-  const parts = combo.split('+').map((part) => part.trim()).filter(Boolean);
+export function keyboardShortcutParse(
+  combo: string,
+  isMac: boolean = keyboardIsMac()
+): KeyboardShortcut {
+  const parts = combo
+    .split('+')
+    .map((part) => part.trim())
+    .filter(Boolean);
   const key = parts.pop() ?? '';
   const names = parts.map((part) => part.toLowerCase());
   const has = (...aliases: string[]) => names.some((name) => aliases.includes(name));
@@ -73,10 +110,12 @@ export function keyboardShortcutMatches(
 ): boolean {
   const shortcut = typeof combo === 'string' ? keyboardShortcutParse(combo, isMac) : combo;
 
-  if (event.ctrlKey !== shortcut.ctrl
-    || event.altKey !== shortcut.alt
-    || event.shiftKey !== shortcut.shift
-    || event.metaKey !== shortcut.meta) {
+  if (
+    event.ctrlKey !== shortcut.ctrl ||
+    event.altKey !== shortcut.alt ||
+    event.shiftKey !== shortcut.shift ||
+    event.metaKey !== shortcut.meta
+  ) {
     return false;
   }
 
@@ -100,9 +139,14 @@ export function keyboardShortcutMatches(
 export function keyboardShortcutLabel(combo: string, isMac: boolean = keyboardIsMac()): string {
   const shortcut = keyboardShortcutParse(combo, isMac);
   const labels = isMac ? KEYBOARD_LABELS_MAC : KEYBOARD_LABELS;
-  const order: (keyof KeyboardShortcut)[] = isMac ? ['ctrl', 'alt', 'shift', 'meta'] : ['ctrl', 'meta', 'alt', 'shift'];
-  const parts = order.filter((modifier) => shortcut[modifier]).map((modifier) => labels[modifier as string]);
-  const key = labels[shortcut.key] ?? (shortcut.key.length === 1 ? shortcut.key.toUpperCase() : shortcut.key);
+  const order: (keyof KeyboardShortcut)[] = isMac
+    ? ['ctrl', 'alt', 'shift', 'meta']
+    : ['ctrl', 'meta', 'alt', 'shift'];
+  const parts = order
+    .filter((modifier) => shortcut[modifier])
+    .map((modifier) => labels[modifier as string]);
+  const key =
+    labels[shortcut.key] ?? (shortcut.key.length === 1 ? shortcut.key.toUpperCase() : shortcut.key);
 
   return isMac ? [...parts, key].join('') : [...parts, key].join('+');
 }
